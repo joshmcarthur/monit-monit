@@ -1,0 +1,13 @@
+!!! 5
+%html
+  %head
+    %link{:href => "http://twitter.github.com/bootstrap/assets/css/bootstrap-1.1.0.min.css", :rel => "stylesheet", :type => "text/css"}
+    %title
+      MonitMonit
+      = " :: #{@title}" if @title
+
+  %body
+    = yield
+
+    %script{:type => "text/javascript", :src => "https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"}
+
