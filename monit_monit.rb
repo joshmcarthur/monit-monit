@@ -11,8 +11,18 @@ class MonitMonit < Sinatra::Base
   # Setup
   DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/db/monit_monit.db")
   Cluster.auto_upgrade!
+  set :public, "public"
 
-  #Manage settings
+  # Overview
+  get '/' do
+    @clusters = Cluster.all
+    @servers = []
+    @clusters.each { |c| @servers << c.resource.servers }
+    @servers.flatten!
+    haml :overview
+  end
+
+  #Manage clusters
   get '/clusters' do
     @clusters = Cluster.all
     haml :clusters
