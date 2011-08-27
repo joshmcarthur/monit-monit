@@ -14,6 +14,10 @@ class Cluster
     @resource ||= Monittr::Cluster.new([self.monit_url]) if self.monit_url
     self.resource = @resource
   end
+  
+  def self.servers 
+    Cluster.all.map { |cluster| cluster.resource.servers }.flatten
+  end
 
 end
 
