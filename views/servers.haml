@@ -1,0 +1,26 @@
+%section.server
+    %header
+      %h1= "#{@server.system.name}"
+    %article
+    .row
+      .span6.columns CPU Usage
+      .span10.columns= "#{@server.system.cpu}%"
+    .row
+      .span6.columns Memory Usage
+      .span10.columns= "#{@server.system.memory}%"
+    .row
+      .span8.columns
+        %h6 Filesystems
+        %table.common-table
+          - @server.filesystems.each do |fs|
+            %tr
+              %td= fs.name
+              %td= "#{fs.percent}% (#{fs.usage} / #{fs.total})"
+      .span8.columns
+        %h6 Processes
+        %table.common-table
+          - @server.processes.each do |ps|
+            %tr
+              %td= ps.name
+              %td= "CPU: #{ps.cpu}"
+              %td= "Memory: #{ps.memory}"
