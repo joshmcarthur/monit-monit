@@ -2,42 +2,33 @@
   %p
     %strong Welcome to MonitMonit!
     %p
-      It's #{Time.now.strftime("%c")}, and you're managing #{@clusters.count} Monit clusters which monitor #{@servers.length} servers.
+      It's #{Time.now.strftime("%c")}, and you're managing #{Cluster.count} Monit clusters which monitor #{@servers.length} servers.
       %br
       %strong Enjoy!
 - @servers.each do |server|
   %section.server
     %header
       %h4= "#{server.system.name}"
+    %article
     .row
       .span6.columns CPU Usage
-      .span10.columns= server.system.cpu
+      .span10.columns= "#{server.system.cpu}%"
     .row
       .span6.columns Memory Usage
-      .span10.columns= server.system.memory
-    .row
-      .span8.columns 
-        %strong Filesystems 
-      .span8.columns
-        %strong Processes
+      .span10.columns= "#{server.system.memory}%"
     .row
       .span8.columns
-        - server.filesystems.each do |fs|
-          %h6= fs.name
-          .span4.columns= "#{fs.usage} / #{fs.total}"
-          .span4.columns= "#{fs.percent}%"
+        %h6 Filesystems
+        %table.common-table
+          - server.filesystems.each do |fs|
+            %tr
+              %td= fs.name
+              %td= "#{fs.percent}% (#{fs.usage} / #{fs.total})"
       .span8.columns
-        - server.processes.each do |ps|
-          %h6= ps.name
-          .span4.columns= "#{ps.uptime}"
-          .span4.columns
-          .span4.columns CPU
-          .span4.columns= "#{ps.cpu}"
-          .span4.columns Memory
-          .span4.columns= "#{ps.memory}"
-    .resources{:onload => "javascript:drawResourceUtilization(#{server.system.cpu}, #{server.system.memory}, $(this)[0])"}
-      #chart_div
-      
-    
-    
-   
+        %h6 Processes
+        %table.common-table
+          - server.processes.each do |ps|
+            %tr
+              %td= ps.name
+              %td= "CPU: #{ps.cpu}"
+              %td= "Memory: #{ps.memory}"
