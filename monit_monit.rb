@@ -15,11 +15,14 @@ class MonitMonit < Sinatra::Base
 
   # Overview
   get '/' do
-    @clusters = Cluster.all
-    @servers = []
-    @clusters.each { |c| @servers << c.resource.servers }
-    @servers.flatten!
+    @servers = Cluster.servers
     haml :overview
+  end
+  
+  # Show a specific server's details
+  get '/servers' do
+    @servers = Cluster.servers
+    haml :servers
   end
 
   #Manage clusters
@@ -38,18 +41,6 @@ class MonitMonit < Sinatra::Base
     @cluster.destroy
     redirect '/clusters'
   end
-
-  # Display overviews of server resource usage
-  # Display a listing of servers
-  get '/' do
-
-  end
-
-  # Display broken-down server resource and process information
-  get '/:server_id' do
-
-  end
-
 
   run!
 end
