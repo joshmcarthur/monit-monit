@@ -38,8 +38,6 @@
               %a{:href => "/servers"} Server Detail
             %li
               %a{:href => "/clusters"} Clusters
-            %li
-              %a{:href => "/settings"} Settings
       #main{:role => "main"}
         .row
           = yield
@@ -51,4 +49,5 @@
   :javascript
     window.jQuery || document.write('<script src="/javascripts/jquery.min.js"><\/script>')
     google.load('visualization', '1.0', ['corechart', 'gauge']);
+    google.setOnLoadCallback(drawChart);
     
