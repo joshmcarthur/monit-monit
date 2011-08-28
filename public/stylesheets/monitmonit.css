@@ -24,3 +24,5 @@ section.server a.large { margin-top: 20px; line-height: 50px; width: 150px; text
 table tbody td.empty-table { background: #DDD; text-align: center; font-style: italic;}
 
 table tbody td.delete-wrapper form { margin: 0; float: right; }
+section.server header section.about { padding-left: 50px; }
+
