@@ -1,6 +1,16 @@
 div.topbar-wrapper { position: relative; height: 40px; margin: 5px 0 15px; }
 div.topbar-wrapper .topbar { position: static; }
+div.row { margin-left: 0px; }
 
 div.topbar-wrapper .topbar .fill { padding-left: 20px; padding-right: 20px; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; height: 40px; }
 
-div#main { margin-top: 20px; padding-top: 20px;  }
+html, body { background-color: #EFEFEF !important; }
+div.container { background: #FFF; border-left: solid #999 1px; border-right: solid #999 1px; padding: 10px 10px; border-bottom: solid 1px #999;}
+
+section.server header.actions { padding-left: 20px; }
+section.server { border-left: solid 1px #DDD; border-right: solid 1px #DDD; border-bottom: solid 1px #DDD; width: 940px; }
+section.server div.row .span4.columns { width: 215px; }
+
+h2.uptime { font-size: 250%; margin-top: 40px; }
+section.server a.large { margin-top: 20px; line-height: 50px; width: 150px; text-align: center; font-size: 24px; }
+

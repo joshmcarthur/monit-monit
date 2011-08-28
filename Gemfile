@@ -6,4 +6,6 @@ gem 'datamapper'
 gem 'dm-sqlite-adapter'
 gem 'haml'
 gem 'monittr'
+gem 'json'
+gem 'sinatra-content-for'
 
