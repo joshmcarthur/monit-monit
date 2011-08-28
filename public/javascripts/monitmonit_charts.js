@@ -1,4 +1,4 @@
-google.load('visualization', '1', {packages:['gauge']});
+google.load('visualization', '1', {packages:['corechart', 'gauge']});
 google.setOnLoadCallback(drawCharts);
 
 
@@ -18,6 +18,21 @@ var drawResourceUtilization = function(chart_div, label, value) {
 }
 
 
+var drawDiskPie = function(chart_div, filesystem, used, total) {
+    var disk_data = new google.visualization.DataTable();
+    disk_data.addColumn("string", "Description");
+    disk_data.addColumn("number", "Percentage");
+    disk_data.addRows(2);
+    
+    disk_data.setValue(0, 0, "Used");
+    disk_data.setValue(0, 1, used);
+    disk_data.setValue(1, 0, "Total");
+    disk_data.setValue(1, 1, total);
+    
+    var disk_chart = new google.visualization.PieChart(chart_div);
+    disk_chart.draw(disk_data, {width: 450, height: 300});
+}
+
 
 function drawCharts() {
     var servers = $('section.server');
@@ -29,6 +44,15 @@ function drawCharts() {
         drawResourceUtilization($(this).find('#cpu_chart')[0], 'CPU %', cpu);
         drawResourceUtilization($(this).find('#memory_chart')[0], 'Memory %', memory);
         drawResourceUtilization($(this).find('#load_chart')[0], 'Load', load);
+        
+        if ($('fieldset.filesystem').length > 0) {
+            $('fieldset.filesystem').each(function() {
+                var name = $(this).find('input.name').val();
+                var usage = parseFloat($(this).find('input.usage').val());
+                var total = parseFloat($(this).find('input.total').val());
+                var chart_div = $("#" + name + "_chart")[0];
+                drawDiskPie(chart_div, name, usage, total);
+            });
+        }
     });
 }
-
