@@ -1,34 +1,36 @@
 $(document).ready(function() {
-    $('section.server .uptime').each(function() {
-        $(this).showTime({
-            div_hours: "h ",
-            div_minutes: "m ",
-            div_seconds: "s "
-        });
-    });
+    formatUptime(false);
 });
 
 
-var secondsToHuman = function(seconds_int) {
-    var seconds = seconds_int;
-    seconds_int /= 60;
-    var minutes = seconds_int % 60;
-    seconds_int /= 60;
-    var hours = seconds_int % 24;
-    seconds_int /= 24;
-    var days = seconds_int;
-
-    var human = ""
-    if (days > 0) { human += (days + " days "); }
-    if (hours > 0) { human += (hours + " hours "); }
-    if (minutes > 0) { human += (minutes + " minutes "); }
-    if (seconds > 0) { human += (seconds + " seconds"); }
-    return human;
+var formatUptime = function(use_effects) {
+    var options = {
+        div_hours: "h ",
+        div_minutes: "m ",
+        div_seconds: "s "
+    }
+    
+    if (use_effects) {
+        $('h2.uptime').fadeOut(function() {  
+            $(this).showTime(options);
+            $(this).fadeIn();
+        });
+    }
+    else {
+        $('h2.uptime').showTime(options);
+    }
 }
 
-var doCountdown = function() {
-    alert('Hit countdown');
-    $('.countdown').countdown({until: '60S', layout: '&#8635;&nbsp;&nbsp;Refreshing in {sn} seconds.', onExpiry: refreshOverview});
+var doCountdown = function(already_run) {
+    if (already_run) {
+        $('.countdown').countdown('change', {until: '60S'});
+    }
+    else {
+        setTimeout(function() {
+            $("<div class='alert-message warning countdown'>Countdown initializing...</div>").hide().insertAfter('div#welcome').slideDown();
+            $('.countdown').countdown({until: '60S', layout: '&#8635;&nbsp;&nbsp;Refreshing in {sn} seconds.', onExpiry: refreshOverview});
+        }, 5000);
+    }
 }
 
 var refreshOverview = function() {
@@ -39,12 +41,12 @@ var refreshOverview = function() {
                 server.find('input.cpu').val(value.cpu);
                 server.find('input.memory').val(value.memory);
                 server.find('input.load').val(value.load);
-                server.find('h2.uptime').val(value.uptime);
+                server.find('h2.uptime').text(value.uptime);
                 drawCharts();
+                formatUptime(true);
             }
         });
     });
-    alert("Done refresh")
-    doCountdown();
+    doCountdown(true);
 }
 
