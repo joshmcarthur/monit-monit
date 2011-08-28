@@ -24,7 +24,7 @@
         %td= cluster.id
         %td= cluster.name || "[Not given]"
         %td= cluster.monit_url
-        %td
+        %td.delete-wrapper
           %form{:action => "/cluster/#{cluster.id}/delete", :method => :post}
             %button.btn.danger{:type => "submit"} Delete
 

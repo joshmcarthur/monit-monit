@@ -5,7 +5,6 @@
       It's #{Time.now.strftime("%A %e %B %Y")}, and you're managing #{Cluster.count} Monit clusters which monitor #{@servers.length} servers.
       %br
       %strong Enjoy!
-.alert-message.warning.countdown
 - @servers.each do |server|
   %section.server{:id => server.id}
     %header.actions
@@ -20,8 +19,8 @@
       .span4.columns
         %h2.uptime
           = "#{server.system.uptime} seconds"
-        %a.btn.large.success{:href => "/servers/#{server.id}"}
-          Detail&nbsp;&#8667;
+        %a.btn.large.success{:href => "/servers?id=#{server.id}"}
+          Server Details
     %input{:type => "hidden", :class => "cpu", :value => server.system.cpu}
     %input{:type => "hidden", :class => "memory", :value => server.system.memory}
     %input{:type => "hidden", :class => "load", :value => server.system.load}
