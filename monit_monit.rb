@@ -26,9 +26,9 @@ class MonitMonit < Sinatra::Base
     @servers = Cluster.server_information.to_json
   end
 
-  # Show a specific server's details
+  # Show a selection page for servers details
   get '/servers' do
-    @servers = Cluster.servers
+    @server = Cluster.servers.select { |server| server.id == params[:id] }.first
     haml :servers
   end
 
