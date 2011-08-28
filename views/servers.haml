@@ -1,27 +1,79 @@
-- @servers.each do |server|
+.row
+  .span16.columns
+    %form{:action => '/servers', :method => :get}
+      %fieldset
+        %legend Select a Server to display
+        .clearfix
+          %label{:for => 'id'} Server:
+          .input
+            %select{:name => 'id'}
+              - Cluster.servers.each do |server|
+                %option{:value => server.id, :selected => server.id == params[:id] ? true : false}= server.system.name
+        .actions
+          %button.btn.primary{:type => "submit"}
+            Show
+- if @server
   %section.server
-    %header
-      %h4= "#{server.system.name}"
-    %article
+    %header.actions
+      %h2= "#{@server.system.name}"
     .row
-      .span6.columns CPU Usage
-      .span10.columns= "#{server.system.cpu}%"
+      .span5.columns
+        #cpu_chart
+      .span5.columns
+        #memory_chart
+      .span5.columns
+        #load_chart
+      %input{:type => "hidden", :class => "cpu", :value => @server.system.cpu}
+      %input{:type => "hidden", :class => "memory", :value => @server.system.memory}
+      %input{:type => "hidden", :class => "load", :value => @server.system.load}
     .row
-      .span6.columns Memory Usage
-      .span10.columns= "#{server.system.memory}%"
-    .row
-      .span8.columns
-        %h6 Filesystems
-        %table.common-table
-          - server.filesystems.each do |fs|
+      .span8.columns.filesystems
+        %h4 Filesystems
+        - @server.filesystems.each do |fs|
+          %fieldset.filesystem
+            %input{:type => "hidden", :class => "name", :value => fs.name}
+            %input{:type => "hidden", :class => "usage", :value => fs.usage}
+            %input{:type => "hidden", :class => "total", :value => fs.total}
+          %h6= "#{fs.name} Usage"
+          %div{:id => "#{fs.name}_chart"}
+      .span8.columns.processes
+        %h4 Monitored Processes
+        %table.common-table.zebra-striped.tablesorter
+          %thead
             %tr
-              %td= fs.name
-              %td= "#{fs.percent}% (#{fs.usage} / #{fs.total})"
-      .span8.columns
-        %h6 Processes
-        %table.common-table
-          - server.processes.each do |ps|
+              %th.header.green Name
+              %th.header.green CPU
+              %th.header.green Memory
+          %tbody
+            - unless @server.processes.empty?
+              - @server.processes.each do |ps|
+                %tr
+                  %td= ps.name
+                  %td= "CPU: #{ps.cpu}"
+                  %td= "Memory: #{ps.memory}"
+            - else
+              %tr
+                %td.empty-table{:colspan => 3} (No processes being monitored)
+      .span8.columns.hosts
+        %h4 Monitored Hosts
+        %table.common-table.zebra-striped.tablesorter
+          %thead
             %tr
-              %td= ps.name
-              %td= "CPU: #{ps.cpu}"
-              %td= "Memory: #{ps.memory}"
+              %th.header.blue Name
+              %th.header.blue Status
+              %th.header.blue Response Time
+          %tbody
+            - unless @server.hosts.empty?
+              - @server.hosts.each do |host|
+                %tr
+                  %td= host.name
+                  %td= host.status
+                  %th= host.response_time
+            - else
+              %tr
+                %td.empty-table{:colspan => 3} (No hosts being monitored)
+                
+- content_for :javascripts do
+  %script{:src => "/javascripts/jquery.tablesorter.min.js"}
+  :javascript
+    $('table.tablesorter').tablesorter();
