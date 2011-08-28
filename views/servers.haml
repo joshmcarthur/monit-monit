@@ -16,6 +16,9 @@
   %section.server
     %header.actions
       %h2= "#{@server.system.name}"
+      %section.about
+        %em
+          = "Linux #{@server.platform.kernel} (#{@server.platform.architecture}) server with #{@server.platform.num_cpus} cores and #{(@server.platform.total_memory.to_f/1024/1024).round(2)}GB of memory."
     .row
       .span5.columns
         #cpu_chart
@@ -72,8 +75,9 @@
             - else
               %tr
                 %td.empty-table{:colspan => 3} (No hosts being monitored)
-                
+
 - content_for :javascripts do
   %script{:src => "/javascripts/jquery.tablesorter.min.js"}
   :javascript
     $('table.tablesorter').tablesorter();
+
