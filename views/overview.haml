@@ -1,44 +1,33 @@
-.alert-message.block-message.success
+#welcome.alert-message.block-message.success
   %p
     %strong Welcome to MonitMonit!
     %p
       It's #{Time.now.strftime("%A %e %B %Y")}, and you're managing #{Cluster.count} Monit clusters which monitor #{@servers.length} servers.
       %br
       %strong Enjoy!
+.alert-message.warning.countdown
 - @servers.each do |server|
-  - if server.error.is_a?(Error)
-    %section.server.alert-messsage.block-message.error
-      %header
-        %h4= "#{server.error.name}"
-      %p
-        Something went wrong retrieving the status from this server.
-        %br
-        %strong= "(Status #{server.error.status}: #{server.error.message})"
-  - else
-    %section.server
-      %header
-        %h4= "#{server.system.name}"
-      %article
-      .row
-        .span6.columns CPU Usage
-        .span10.columns= "#{server.system.cpu}%"
-      .row
-        .span6.columns Memory Usage
-        .span10.columns= "#{server.system.memory}%"
-      .row
-        .span8.columns
-          %h6 Filesystems
-          %table.common-table
-            - server.filesystems.each do |fs|
-              %tr
-                %td= fs.name
-                %td= "#{fs.percent}% (#{fs.usage} / #{fs.total})"
-        .span8.columns
-          %h6 Processes
-          %table.common-table
-            - server.processes.each do |ps|
-              %tr
-                %td= ps.name
-                %td= "CPU: #{ps.cpu}"
-                %td= "Memory: #{ps.memory}"
+  %section.server{:id => server.id}
+    %header.actions
+      %h2= "#{server.system.name}"
+    .row
+      .span4.columns
+        #cpu_chart
+      .span4.columns
+        #memory_chart
+      .span4.columns
+        #load_chart
+      .span4.columns
+        %h2.uptime
+          = "#{server.system.uptime} seconds"
+        %a.btn.large.success{:href => "/servers/#{server.id}"}
+          Detail&nbsp;&#8667;
+    %input{:type => "hidden", :class => "cpu", :value => server.system.cpu}
+    %input{:type => "hidden", :class => "memory", :value => server.system.memory}
+    %input{:type => "hidden", :class => "load", :value => server.system.load}
+
+
+- content_for :javascripts do
+  :javascript
+    doCountdown();
 
