@@ -18,6 +18,7 @@ class MonitMonit < Sinatra::Base
 
   # Overview
   get '/' do
+    @title = "Overview"
     @servers = Cluster.servers
     haml :overview
   end
@@ -29,12 +30,14 @@ class MonitMonit < Sinatra::Base
   # Show a selection page for servers details
   get '/servers' do
     @server = Cluster.servers.select { |server| server.id == params[:id] }.first
+    @title = @server.system.name if @server
     haml :servers
   end
 
   #Manage clusters
   get '/clusters' do
     @clusters = Cluster.all
+    @title = "Clusters"
     haml :clusters
   end
 
