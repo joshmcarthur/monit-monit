@@ -18,8 +18,8 @@ Monittr::Server.class_eval do
   def initialize(url, xml)
     @url = url
     @xml = Nokogiri::XML(xml)
-    puts @xml
-    @id = @xml.xpath("/monit/server/id").first.content
+    @id = @xml.xpath("/monit/server/id").first
+    @id = @id.content if @id
     if error = @xml.xpath('error').first
       @error = Error.new({
         :name => error.attributes['name'].content,
