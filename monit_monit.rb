@@ -18,7 +18,7 @@ class MonitMonit < Sinatra::Base
     @servers = Cluster.servers
     haml :overview
   end
-  
+
   # Show a specific server's details
   get '/servers' do
     @servers = Cluster.servers
@@ -41,7 +41,5 @@ class MonitMonit < Sinatra::Base
     @cluster.destroy
     redirect '/clusters'
   end
-
-  run!
 end
 
