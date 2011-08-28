@@ -4,6 +4,7 @@ require 'monittr'
 require 'haml'
 
 require "#{Dir.pwd}/models/cluster"
+require "#{Dir.pwd}/lib/monittr_decorator.rb"
 
 
 class MonitMonit < Sinatra::Base
