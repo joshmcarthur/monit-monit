@@ -14,6 +14,9 @@ section.server header.actions { padding-left: 20px; }
 section.server header.actions h2 { background: url(../images/server.png) no-repeat 10px 50%; padding-left: 50px; }
 section.server { border-left: solid 1px #DDD; border-right: solid 1px #DDD; border-bottom: solid 1px #DDD; width: 940px; }
 section.server div.row .span4.columns { width: 215px; }
+div.row.servers .span8 { margin-left: 10px; }
+div.row.servers form { margin-top: 20px; }
+.alert-message.block-message p { margin-top: 10px; }
 
 h2.uptime { font-size: 250%; margin-top: 40px; }
 section.server a.large { margin-top: 20px; line-height: 50px; width: 150px; text-align: center; font-size: 24px; }
