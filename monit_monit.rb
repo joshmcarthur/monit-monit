@@ -3,22 +3,25 @@ require 'sinatra/content_for'
 require 'datamapper'
 require 'dm-timestamps'
 require 'haml'
+require "#{Dir.pwd}/lib/scheduler_manager_middleware"
 
 #Require models
-require "#{Dir.pwd}/models/xml_helpers"
-Dir["#{Dir.pwd}/models/*.rb"].each { |model| require model }
+$LOAD_PATH.unshift(File.dirname(__FILE__) + '/models') unless $LOAD_PATH.include?(File.dirname(__FILE__) + '/models')
+require "xml_helpers"
+require "server"
 
 
 class MonitMonit < Sinatra::Base
 
   # Setup
+  use SchedulerManagerMiddleware
   DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/db/monit_monit.db")
   Server.auto_upgrade!
   ServerProcess.auto_upgrade!
   ResourceRecord.auto_upgrade!
   Host.auto_upgrade!
   Filesystem.auto_upgrade!
-  
+
   helpers Sinatra::ContentFor
   set :public, "public"
 
@@ -26,7 +29,6 @@ class MonitMonit < Sinatra::Base
   get '/' do
     @title = "Overview"
     @servers = Server.all
-    @servers.each { |s| s.fetch }
     haml :overview
   end
 
@@ -50,6 +52,7 @@ class MonitMonit < Sinatra::Base
 
   post '/servers' do
     @server = Server.create!(params[:server])
+    @server.fetch
     redirect '/servers'
   end
 
