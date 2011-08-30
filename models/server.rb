@@ -37,6 +37,15 @@ class Server
     self.resource_records.first(:order =>  [:created_at.desc]).swap
   end
   
+  def overview
+    {
+      :uptime => self.uptime,
+      :cpu => self.cpu,
+      :memory => self.memory,
+      :load => self.load
+    }
+  end
+  
   ## Retrieve XML file from Monit, and parse it for the information we need ##
   
   def fetch
