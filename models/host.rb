@@ -10,10 +10,18 @@ class Host
   
   def self.update_or_create_from_xml(conditions = {}, xml, extra_attributes)
     @xml = xml
-    @host = Host.get(conditions) || Host.new
-    @host.update({
+    
+    attributes = {
+      :name => value('name'),
       :response_time => value('port/responsetime')
-    }.merge(extra_attributes))
+    }.merge(extra_attributes)
+    
+    if @host = Host.get(conditions)
+      @host.update!(attributes)
+    else
+      @host = Host.create!(attributes)
+    end
+    
     return @host
   end
 end
