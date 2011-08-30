@@ -4,52 +4,59 @@ require 'datamapper'
 require 'monittr'
 require 'haml'
 
-require "#{Dir.pwd}/models/cluster"
-require "#{Dir.pwd}/lib/monittr_decorator"
+#Require models
+require "#{Dir.pwd}/models/xml_helpers"
+Dir["#{Dir.pwd}/models/*.rb"].each { |model| require model }
 
 
 class MonitMonit < Sinatra::Base
 
   # Setup
   DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/db/monit_monit.db")
-  Cluster.auto_upgrade!
+  Server.auto_upgrade!
+  ServerProcess.auto_upgrade!
+  ResourceRecord.auto_upgrade!
+  Host.auto_upgrade!
+  Filesystem.auto_upgrade!
+  
   helpers Sinatra::ContentFor
   set :public, "public"
 
   # Overview
   get '/' do
     @title = "Overview"
-    @servers = Cluster.servers
+    @servers = Server.all
+    @servers.each(&:fetch)
     haml :overview
   end
 
   get '/overview.json' do
-    @servers = Cluster.server_information.to_json
+    @servers = Server.overview.to_json
   end
 
   # Show a selection page for servers details
+  get '/server-details' do
+    @server = Server.get(params[:id])
+    @title = @server.name if @server
+    haml :detail
+  end
+
+  #Manage servers
   get '/servers' do
-    @server = Cluster.servers.select { |server| server.id == params[:id] }.first
-    @title = @server.system.name if @server
+    @servers = Server.all
+    @title = "Servers"
     haml :servers
   end
 
-  #Manage clusters
-  get '/clusters' do
-    @clusters = Cluster.all
-    @title = "Clusters"
-    haml :clusters
+  post '/servers' do
+    @server = Server.create!(params[:server])
+    redirect '/servers'
   end
 
-  post '/cluster' do
-    @cluster = Cluster.create!(params[:cluster])
-    redirect '/clusters'
-  end
-
-  post '/cluster/:id/delete' do
-    @cluster = Cluster.get(params[:id])
-    @cluster.destroy
-    redirect '/clusters'
+  post '/servers/:id/delete' do
+    @server = Server.get(params[:id])
+    @server.destroy
+    redirect '/servers'
   end
 
   run!

@@ -1,83 +1,29 @@
-.row
-  .span16.columns
-    %form{:action => '/servers', :method => :get}
-      %fieldset
-        %legend Select a Server to display
-        .clearfix
-          %label{:for => 'id'} Server:
-          .input
-            %select{:name => 'id'}
-              - Cluster.servers.each do |server|
-                %option{:value => server.id, :selected => server.id == params[:id] ? true : false}= server.system.name
-        .actions
-          %button.btn.primary{:type => "submit"}
-            Show
-- if @server
-  %section.server
-    %header.actions
-      %h2= "#{@server.system.name}"
-      %section.about
-        %em
-          = "Linux #{@server.platform.kernel} (#{@server.platform.architecture}) server with #{@server.platform.num_cpus} cores and #{(@server.platform.total_memory.to_f/1024/1024).round(2)}GB of memory."
-    .row
-      .span5.columns
-        #cpu_chart
-      .span5.columns
-        #memory_chart
-      .span5.columns
-        #load_chart
-      %input{:type => "hidden", :class => "cpu", :value => @server.system.cpu}
-      %input{:type => "hidden", :class => "memory", :value => @server.system.memory}
-      %input{:type => "hidden", :class => "load", :value => @server.system.load}
-    .row
-      .span8.columns.filesystems
-        %h4 Filesystems
-        - @server.filesystems.each do |fs|
-          %fieldset.filesystem
-            %input{:type => "hidden", :class => "name", :value => fs.name}
-            %input{:type => "hidden", :class => "usage", :value => fs.usage}
-            %input{:type => "hidden", :class => "total", :value => fs.total}
-          %h6= "#{fs.name} Usage"
-          %div{:id => "#{fs.name}_chart"}
-      .span8.columns.processes
-        %h4 Monitored Processes
-        %table.common-table.zebra-striped.tablesorter
-          %thead
-            %tr
-              %th.header.green Name
-              %th.header.green CPU
-              %th.header.green Memory
-          %tbody
-            - unless @server.processes.empty?
-              - @server.processes.each do |ps|
-                %tr
-                  %td= ps.name
-                  %td= "CPU: #{ps.cpu}"
-                  %td= "Memory: #{ps.memory}"
-            - else
-              %tr
-                %td.empty-table{:colspan => 3} (No processes being monitored)
-      .span8.columns.hosts
-        %h4 Monitored Hosts
-        %table.common-table.zebra-striped.tablesorter
-          %thead
-            %tr
-              %th.header.blue Name
-              %th.header.blue Status
-              %th.header.blue Response Time
-          %tbody
-            - unless @server.hosts.empty?
-              - @server.hosts.each do |host|
-                %tr
-                  %td= host.name
-                  %td= host.status
-                  %th= host.response_time
-            - else
-              %tr
-                %td.empty-table{:colspan => 3} (No hosts being monitored)
+%form{:action => "/servers", :method => :post}
+  .clearfix
+    %label{:for => "server_name"} Name
+    .input
+      %input{:type => "text", :name => "server[name]", :id => "server_name"}
+  .clearfix
+    %label{:for => "server_url"} Monit URL
+    .input
+      %input{:type => "text", :name => "server[url]", :id => "server_url"}
+  .actions
+    %input.btn.primary{:type => "submit", :value => "Add Server"}
 
-- content_for :javascripts do
-  %script{:src => "/javascripts/jquery.tablesorter.min.js"}
-  :javascript
-    $('table.tablesorter').tablesorter();
+%table{:class => "common-table zebra-striped"}
+  %thead
+    %tr
+      %th Server ID
+      %th Server Name
+      %th Server URL
+      %th
+  %tbody
+    - @servers.each do |server|
+      %tr
+        %td= server.id
+        %td= server.name || "[Not given]"
+        %td= server.url
+        %td.delete-wrapper
+          %form{:action => "/servers/#{server.id}/delete", :method => :post}
+            %button.btn.danger{:type => "submit"} Delete
 
