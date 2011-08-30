@@ -8,4 +8,3 @@ gem 'haml'
 gem 'nokogiri'
 gem 'json'
 gem 'sinatra-content-for'
-
