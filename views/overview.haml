@@ -5,6 +5,13 @@
       It's #{Time.now.strftime("%A %e %B %Y")}, and you're monitoring #{Server.count} servers.
       %br
       %strong Enjoy!
+- if @servers.empty?
+  .alert-message.block-message.error
+    %h5 Uh oh, an error! 
+    %p 
+      You need to set up at least one Monit server before I can display information here!
+    %p
+      %a.btn.small{:href => "/servers"} Go to Servers
 - @servers.each do |server|
   %section.server{:id => server.id}
     %header.actions
