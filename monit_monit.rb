@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sinatra/content_for'
 require 'datamapper'
-require 'monittr'
+require 'dm-timestamps'
 require 'haml'
 
 #Require models
@@ -26,7 +26,7 @@ class MonitMonit < Sinatra::Base
   get '/' do
     @title = "Overview"
     @servers = Server.all
-    @servers.each(&:fetch)
+    @servers.each { |s| s.fetch }
     haml :overview
   end
 
@@ -59,6 +59,5 @@ class MonitMonit < Sinatra::Base
     redirect '/servers'
   end
 
-  run!
 end
 
