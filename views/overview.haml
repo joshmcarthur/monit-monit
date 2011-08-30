@@ -2,13 +2,13 @@
   %p
     %strong Welcome to MonitMonit!
     %p
-      It's #{Time.now.strftime("%A %e %B %Y")}, and you're managing #{Cluster.count} Monit clusters which monitor #{@servers.length} servers.
+      It's #{Time.now.strftime("%A %e %B %Y")}, and you're monitoring #{Server.count} servers.
       %br
       %strong Enjoy!
 - @servers.each do |server|
   %section.server{:id => server.id}
     %header.actions
-      %h2= "#{server.system.name}"
+      %h2= "#{server.name}"
     .row
       .span4.columns
         #cpu_chart
@@ -18,12 +18,12 @@
         #load_chart
       .span4.columns
         %h2.uptime
-          = "#{server.system.uptime} seconds"
-        %a.btn.large.success{:href => "/servers?id=#{server.id}"}
+          = "#{server.uptime} seconds"
+        %a.btn.large.success{:href => "/server-details?id=#{server.id}"}
           Server Details
-    %input{:type => "hidden", :class => "cpu", :value => server.system.cpu}
-    %input{:type => "hidden", :class => "memory", :value => server.system.memory}
-    %input{:type => "hidden", :class => "load", :value => server.system.load}
+    %input{:type => "hidden", :class => "cpu", :value => server.cpu}
+    %input{:type => "hidden", :class => "memory", :value => server.memory}
+    %input{:type => "hidden", :class => "load", :value => server.load}
 
 
 - content_for :javascripts do
