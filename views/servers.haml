@@ -1,14 +1,22 @@
-%form{:action => "/servers", :method => :post}
-  .clearfix
-    %label{:for => "server_name"} Name
-    .input
-      %input{:type => "text", :name => "server[name]", :id => "server_name"}
-  .clearfix
-    %label{:for => "server_url"} Monit URL
-    .input
-      %input{:type => "text", :name => "server[url]", :id => "server_url"}
-  .actions
-    %input.btn.primary{:type => "submit", :value => "Add Server"}
+.row.servers
+  .span8.columns
+    %form{:action => "/servers", :method => :post}
+      .clearfix
+        %label{:for => "server_name"} Name
+        .input
+          %input{:type => "text", :name => "server[name]", :id => "server_name"}
+      .clearfix
+        %label{:for => "server_url"} Monit URL
+        .input
+          %input{:type => "text", :name => "server[url]", :id => "server_url"}
+      .clearfix
+        .input
+          %input.btn{:type => "submit", :value => "Add Server"}
+  .span8.columns
+    .alert-message.block-message.info
+      %h3.title Creating Servers
+      %p
+        Monit servers can either run on the server they monitor, or on a single monitoring server. You need to enable a couple of settings in your <code>monitrc</code> - notably, the web interface, and access control to allow the IP address of the <strong>MonitMonit</strong> server.
 
 %table{:class => "common-table zebra-striped"}
   %thead
