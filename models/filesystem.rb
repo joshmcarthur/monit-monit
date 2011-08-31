@@ -24,7 +24,7 @@ class Filesystem
     }.merge(extra_attributes)
 
     if @filesystem = Filesystem.get(conditions)
-      @filesystems.update!(attributes)
+      @filesystem.update!(attributes)
     else
       @filesystem = Filesystem.create!(attributes)
     end
