@@ -13,7 +13,7 @@ div.topbar-wrapper .topbar .fill { padding-left: 20px; padding-right: 20px;  hei
 .twipsy.goto_overview .twipsy-inner { background-color: white; color: black; }
 
 html, body { background-color: #EFEFEF !important; }
-div.container { background: #FFF; border-left: solid #999 1px; border-right: solid #999 1px; padding: 10px 10px; border-bottom: solid 1px #999;}
+div.container { background: #FFF; border-left: solid #999 1px; border-right: solid #999 1px; padding: 10px 10px; border-bottom: solid 1px #999; margin-bottom: 20px;}
 
 section.server header.actions { padding-left: 20px; }
 section.server header.actions h2 { background: url(../images/server.png) no-repeat 10px 50%; padding-left: 50px; }
