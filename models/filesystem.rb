@@ -23,7 +23,7 @@ class Filesystem
       :total => value('block/total')
     }.merge(extra_attributes)
 
-    if @filesystem = Filesystem.get(conditions)
+    if @filesystem = Filesystem.first(conditions)
       @filesystem.update!(attributes)
     else
       @filesystem = Filesystem.create!(attributes)

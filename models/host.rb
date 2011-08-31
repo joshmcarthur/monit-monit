@@ -19,7 +19,7 @@ class Host
       :response_time => value('port/responsetime')
     }.merge(extra_attributes)
 
-    if @host = Host.get(conditions)
+    if @host = Host.first(conditions)
       @host.update!(attributes)
     else
       @host = Host.create!(attributes)
