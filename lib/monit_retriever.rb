@@ -17,8 +17,10 @@ class MonitRetriever
 
   def start
     #Start a new job for each server? Or just one to handle all of them?
-    Server.all.each do |server|
-      self.jobs << scheduler.every('1m', MonitJob.new(server.id))
+    self.jobs << scheduler.every('1m') do
+      Server.all.each do |server|
+        server.fetch
+      end
     end
     self
   end
