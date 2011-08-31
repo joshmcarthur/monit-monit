@@ -1,17 +1,29 @@
 # A sample Gemfile
 source "http://rubygems.org"
 
+#Display
 gem 'sinatra'
-gem 'datamapper'
-gem 'dm-sqlite-adapter'
 gem 'haml'
+
+
+#Parsing and Marshalling
 gem 'nokogiri'
 gem 'json'
-gem 'sinatra-content-for'
+
+#Queueing
 gem 'rufus-scheduler'
-gem 'rack-test'
+
+#Database
+gem 'datamapper'
+gem 'dm-sqlite-adapter'
+
+#Other
+gem 'sinatra-content-for'
+
+
 
 group :test do
+    gem 'rack-test'
     gem 'capybara'
     gem 'launchy'
 end
