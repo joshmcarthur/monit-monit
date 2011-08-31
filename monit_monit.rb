@@ -37,7 +37,7 @@ class MonitMonit < Sinatra::Base
   end
 
   # Show a selection page for servers details
-  get '/server-details' do
+  get '/server-detail/:id' do
     @server = Server.get(params[:id])
     @title = @server.name if @server
     haml :detail
