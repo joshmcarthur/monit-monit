@@ -15,13 +15,17 @@ class MonitMonit < Sinatra::Base
 
   # Setup
   use SchedulerManagerMiddleware
-  DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/db/monit_monit.db")
-  Server.auto_upgrade!
-  ServerProcess.auto_upgrade!
-  ResourceRecord.auto_upgrade!
-  Host.auto_upgrade!
-  Filesystem.auto_upgrade!
-
+  
+  configure :test do
+    DataMapper::setup(:default, "sqlite3::memory")
+    DataMapper.auto_migrate!
+  end
+  
+  configure :development do
+    DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/db/monit_monit.db")
+    DataMapper.auto_upgrade!
+  end
+  
   helpers Sinatra::ContentFor
   set :public, "public"
 
