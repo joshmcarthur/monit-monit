@@ -30,7 +30,7 @@ class ServerProcess
       :uptime => value('uptime')
     }.merge(extra_attributes)
 
-    if @process = ServerProcess.get(conditions)
+    if @process = ServerProcess.first(conditions)
       @process.update!(attributes)
     else
       @process = ServerProcess.create!(attributes)
