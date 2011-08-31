@@ -4,6 +4,7 @@ require 'datamapper'
 require 'dm-timestamps'
 require 'haml'
 require "#{Dir.pwd}/lib/scheduler_manager_middleware"
+require "#{Dir.pwd}/lib/datastore"
 
 #Require models
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/models') unless $LOAD_PATH.include?(File.dirname(__FILE__) + '/models')
@@ -15,17 +16,17 @@ class MonitMonit < Sinatra::Base
 
   # Setup
   use SchedulerManagerMiddleware
-  
+
   configure :test do
-    DataMapper::setup(:default, "sqlite3::memory")
+    DataStore.fetch_data_store(:test)
     DataMapper.auto_migrate!
   end
-  
+
   configure :development do
-    DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/db/monit_monit.db")
+    DataStore.fetch_data_store(:default)
     DataMapper.auto_upgrade!
   end
-  
+
   helpers Sinatra::ContentFor
   set :public, "public"
 
