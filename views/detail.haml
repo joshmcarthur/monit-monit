@@ -1,42 +1,30 @@
-.row
-  .span16.columns
-    %form{:action => '/server-details', :method => :get}
-      %fieldset
-        %legend Select a Server to display
-        .clearfix
-          %label{:for => 'id'} Server:
-          .input
-            %select{:name => 'id'}
-              - Server.all.each do |server|
-                %option{:value => server.id, :selected => server.id == params[:id] ? true : false}= server.name
-        .actions
-          %button.btn.primary{:type => "submit"}
-            Show
-- if @server
-  %section.server
-    %header.actions
-      %h2= "#{@server.name}"
-    .row
-      .span5.columns
-        #cpu_chart
-      .span5.columns
-        #memory_chart
-      .span5.columns
-        #load_chart
-      %input{:type => "hidden", :class => "cpu", :value => @server.cpu}
-      %input{:type => "hidden", :class => "memory", :value => @server.memory}
-      %input{:type => "hidden", :class => "load", :value => @server.load}
-    .row
-      .span8.columns.filesystems
+%section.server
+  %header.actions
+    %h2= "#{@server.name}"
+  .row
+    .span5.columns
+      #cpu_chart
+    .span5.columns
+      #memory_chart
+    .span5.columns
+      #load_chart
+    %input{:type => "hidden", :class => "cpu", :value => @server.cpu}
+    %input{:type => "hidden", :class => "memory", :value => @server.memory}
+    %input{:type => "hidden", :class => "load", :value => @server.load}
+  .row.middle
+    .span8.columns.filesystems_misc
+      .filesystems
         %h4 Filesystems
         - @server.filesystems.each do |fs|
           %fieldset.filesystem
             %input{:type => "hidden", :class => "name", :value => fs.name}
             %input{:type => "hidden", :class => "usage", :value => fs.usage}
             %input{:type => "hidden", :class => "total", :value => fs.total}
-          %h6= "#{fs.name} Usage"
-          %div{:id => "#{fs.name}_chart"}
-      .span8.columns.processes
+          .chart
+            %h6= "#{fs.name} Usage"
+            %div{:id => "#{fs.name}_chart"}
+    .span8.columns.processes_hosts
+      .processes
         %h4 Monitored Processes
         %table.common-table.zebra-striped.tablesorter
           %thead
@@ -54,7 +42,7 @@
             - else
               %tr
                 %td.empty-table{:colspan => 3} (No processes being monitored)
-      .span8.columns.hosts
+      .hosts
         %h4 Monitored Hosts
         %table.common-table.zebra-striped.tablesorter
           %thead
@@ -72,6 +60,16 @@
             - else
               %tr
                 %td.empty-table{:colspan => 3} (No hosts being monitored)
+  .row
+    .span16.columns.trends
+      %h4 Resource Trends
+  .row
+    .span5.columns
+      CPU Trend Chart
+    .span5.columns
+      Memory Trend Chart
+    .span5.columns
+      Load Trend Chart
 
 - content_for :javascripts do
   %script{:src => "/javascripts/jquery.tablesorter.min.js"}
