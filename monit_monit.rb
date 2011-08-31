@@ -39,6 +39,7 @@ class MonitMonit < Sinatra::Base
   # Show a selection page for servers details
   get '/server-detail/:id' do
     @server = Server.get(params[:id])
+    pass unless @server
     @title = @server.name if @server
     haml :detail
   end
@@ -60,6 +61,16 @@ class MonitMonit < Sinatra::Base
     @server = Server.get(params[:id])
     @server.destroy
     redirect '/servers'
+  end
+
+  not_found do
+    @title = "404"
+    haml :"404", {:layout => :blank}
+  end
+
+  error do
+    @title = "500"
+    haml :"500", {:layout => :blank}
   end
 
 end
