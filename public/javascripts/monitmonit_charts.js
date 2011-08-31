@@ -23,14 +23,32 @@ var drawDiskPie = function(chart_div, filesystem, used, total) {
     disk_data.addColumn("string", "Description");
     disk_data.addColumn("number", "Percentage");
     disk_data.addRows(2);
-    
+
     disk_data.setValue(0, 0, "Used");
     disk_data.setValue(0, 1, used);
     disk_data.setValue(1, 0, "Total");
     disk_data.setValue(1, 1, total);
-    
+
     var disk_chart = new google.visualization.PieChart(chart_div);
     disk_chart.draw(disk_data, {width: 450, height: 300});
+}
+
+var drawTrendLine = function(chart_div, array_of_values) {
+    var trend_data = new google.visualization.DataTable();
+    trend_data.addColumn("string", "Index");
+    trend_data.addColumn("number", "Value");
+    trend_data.addRows(array_of_values.length);
+    var row_count = 0;
+    $.each(array_of_values, function(index, value) {
+        trend_data.setValue(row_count, 0, index.toString());
+        trend_data.setValue(row_count, 1, value);
+        row_count++;
+    });
+    console.log(trend_data);
+
+    var trend_chart = new google.visualization.LineChart(chart_div);
+    options = { width: 280, height: 240, legend: 'none', vAxis: { viewWindowMode: "explicit", viewWindow: { max: 100.00, min: 0.00 } }}
+    trend_chart.draw(trend_data, options);
 }
 
 
@@ -44,7 +62,7 @@ function drawCharts() {
         drawResourceUtilization($(this).find('#cpu_chart')[0], 'CPU %', cpu);
         drawResourceUtilization($(this).find('#memory_chart')[0], 'Memory %', memory);
         drawResourceUtilization($(this).find('#load_chart')[0], 'Load', load);
-        
+
         if ($('fieldset.filesystem').length > 0) {
             $('fieldset.filesystem').each(function() {
                 var name = $(this).find('input.name').val();
@@ -54,5 +72,18 @@ function drawCharts() {
                 drawDiskPie(chart_div, name, usage, total);
             });
         }
+
+        if ($('section.server div.trends').length > 0) {
+            $('section.server div.trends input[type=hidden]').each(function() {
+                var name = $(this).attr('id');
+                var values = $(this).val().split(',');
+                $.each(values, function(index, value) {
+                    values[index] = parseInt(value);
+                });
+                var chart_div = $(this).next('div')[0];
+                drawTrendLine(chart_div, values);
+            });
+        }
     });
 }
+
