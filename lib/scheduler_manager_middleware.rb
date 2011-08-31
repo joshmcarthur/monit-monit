@@ -18,7 +18,6 @@ class SchedulerManagerMiddleware
 
   def start_retriever_if_necessary!
     SchedulerManagerMiddleware.retriever ||= begin
-      puts "STARTING RETRIEVER"
       retriever = MonitRetriever.new
       retriever.start
       retriever
@@ -28,7 +27,6 @@ class SchedulerManagerMiddleware
 
   def add_finalizer_hook!
     at_exit do
-      puts "STOPPING RETRIEVER"
       SchedulerManagerMiddleware.retriever.stop
     end
   end
