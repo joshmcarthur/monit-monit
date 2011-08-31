@@ -43,13 +43,19 @@ class Server
     self.resource_records.first(:order =>  [:created_at.desc]).swap
   end
 
-  def overview
-    {
-      :uptime => self.uptime,
-      :cpu => self.cpu,
-      :memory => self.memory,
-      :load => self.load
-    }
+  def self.overview
+    overview = []
+    Server.all.each do |server|
+      overview << {
+        :id => server.id,
+        :name => server.name,
+        :uptime => server.uptime,
+        :cpu => server.cpu.to_f,
+        :memory => server.memory.to_f,
+        :load => server.load.to_f
+      }
+    end
+    overview
   end
 
   ## Retrieve XML file from Monit, and parse it for the information we need ##
