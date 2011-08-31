@@ -1,5 +1,12 @@
 $(document).ready(function() {
     formatUptime(false);
+    $('header.topbar .twipsy.goto_overview').hide();
+    $('header.topbar h3').mouseenter(function() {
+        $('header.topbar .twipsy.goto_overview').show();
+    });
+    $('header.topbar h3').mouseout(function() {
+        $('header.topbar .twipsy.goto_overview').hide();
+    });
 });
 
 
@@ -9,9 +16,9 @@ var formatUptime = function(use_effects) {
         div_minutes: "m ",
         div_seconds: "s "
     }
-    
+
     if (use_effects) {
-        $('h2.uptime').fadeOut(function() {  
+        $('h2.uptime').fadeOut(function() {
             $(this).showTime(options);
             $(this).fadeIn();
         });
