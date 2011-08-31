@@ -10,14 +10,14 @@ class MonitRetriever
   attr_accessor :jobs
   attr_accessor :scheduler
 
-  def initalize
-    self.scheduler = Rufus::Scheduler.start_new
+  def initialize
     self.jobs = []
+    self.scheduler = Rufus::Scheduler.start_new
   end
 
   def start
     #Start a new job for each server? Or just one to handle all of them?
-    Server.each do |server|
+    Server.all.each do |server|
       self.jobs << scheduler.every('1m', MonitJob.new(server.id))
     end
     self

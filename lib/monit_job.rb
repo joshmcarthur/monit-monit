@@ -13,7 +13,7 @@ class MonitJob
 
   def call(job)
     begin
-      puts "RETRIEVING MONIT FOR #{server.id}"
+      puts "RETRIEVING MONIT FOR #{server_id}"
       Server.get(server_id).fetch
   rescue Exception => e
       puts "MONIT ERROR FOR SERVER #{server_id} (#{e.message})"
