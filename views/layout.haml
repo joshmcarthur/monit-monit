@@ -31,13 +31,13 @@
         %div.fill
           %h3.title
             %a{:href => '/'} MonitMonit
-          %ul
+          .twipsy.right.goto_overview
+            .twipsy-arrow
+            .twipsy-inner
+              Go to Overview!
+          %ul.secondary-nav
             %li
-              %a{:href => "/"} Overview
-            %li
-              %a{:href => "/server-details"} Server Detail
-            %li
-              %a{:href => "/servers"} Servers
+              %a{:href => '/servers'} Manage Servers
     #main{:role => "main"}
       .row
         = yield

@@ -1,11 +1,16 @@
 div.topbar-wrapper { position: relative; height: 40px; margin: 5px -10px 15px; width: 960px; }
 div.topbar-wrapper .topbar { position: static; }
 div.row { margin-left: 0px; }
+div.row.middle { margin-bottom: 0px; }
 .row .span16 { margin-left: 0px !important; }
-.row .span8.columns.processes { margin-left: 0px; }
-.row .span8.columns.filesystems, .row .span8.columns.hosts { width: 459px; border-right: solid 1px #999; }
+.row .span8.columns.processes_hosts { width: 480px; margin-left: 0px; }
+.row .span8.columns.filesystems_misc { width: 459px; border-right: solid 1px #999; margin-left: 0px; }
 
 div.topbar-wrapper .topbar .fill { padding-left: 20px; padding-right: 20px;  height: 40px; }
+
+.twipsy.goto_overview { left: 130px; margin-top: 2px; opacity: 0.95;}
+.twipsy.right.goto_overview .twipsy-arrow { border-right-color: white; }
+.twipsy.goto_overview .twipsy-inner { background-color: white; color: black; }
 
 html, body { background-color: #EFEFEF !important; }
 div.container { background: #FFF; border-left: solid #999 1px; border-right: solid #999 1px; padding: 10px 10px; border-bottom: solid 1px #999;}
@@ -20,9 +25,11 @@ div.row.servers form { margin-top: 20px; }
 
 h2.uptime { font-size: 250%; margin-top: 40px; }
 section.server a.large { margin-top: 20px; line-height: 50px; width: 150px; text-align: center; font-size: 24px; }
-.span8.columns.filesystems h4 { background: #DDD url(../images/disk.png) no-repeat 10px 50%; padding-left: 50px; }
-.span8.columns.processes h4 { background: #DDD url(../images/processes.png) no-repeat 10px 50%; padding-left: 50px; }
-.span8.columns.hosts h4 { background: #DDD url(../images/hosts.png) no-repeat 10px 50%; padding-left: 50px; }
+.span8.columns .filesystems h4 { background: #DDD url(../images/disk.png) no-repeat 10px 50%; padding-left: 50px; }
+.span8.columns .filesystems .chart { padding: 10px; }
+.span8.columns .processes h4 { background: #DDD url(../images/processes.png) no-repeat 10px 50%; padding-left: 50px; }
+.span8.columns .hosts h4 { background: #DDD url(../images/hosts.png) no-repeat 10px 50%; padding-left: 50px; }
+.span16.columns.trends h4 { background: #DDD url(../images/trends.png) no-repeat 10px 50%; padding-left: 50px; }
 
 table tbody td.empty-table { background: #DDD; text-align: center; font-style: italic;}
 
