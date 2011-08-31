@@ -63,13 +63,19 @@
   .row
     .span16.columns.trends
       %h4 Resource Trends
-  .row
+  .row.trends
     .span5.columns
-      CPU Trend Chart
+      %h6 CPU Trend
+      %input{:type => "hidden", :class => "cpu_trend", :value => @server.resource_records.map(&:cpu).join(",")}
+      #cpu_trend_chart
     .span5.columns
-      Memory Trend Chart
+      %h6 Memory Trend
+      %input{:type => "hidden", :class => "memory_trend", :value => @server.resource_records.map(&:memory).join(",")}
+      #memory_trend_chart
     .span5.columns
-      Load Trend Chart
+      %h6 Load Trend
+      %input{:type => "hidden", :class => "load_trend", :value => @server.resource_records.map(&:load).join(",")}
+      #load_trend_chart
 
 - content_for :javascripts do
   %script{:src => "/javascripts/jquery.tablesorter.min.js"}
