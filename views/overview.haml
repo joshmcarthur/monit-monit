@@ -7,8 +7,8 @@
       %strong Enjoy!
 - if @servers.empty?
   .alert-message.block-message.error
-    %h5 Uh oh, an error! 
-    %p 
+    %h5 Uh oh, an error!
+    %p
       You need to set up at least one Monit server before I can display information here!
     %p
       %a.btn.small{:href => "/servers"} Go to Servers
@@ -26,7 +26,7 @@
       .span4.columns
         %h2.uptime
           = "#{server.uptime} seconds"
-        %a.btn.large.success{:href => "/server-details?id=#{server.id}"}
+        %a.btn.large.success{:href => "/server-detail/#{server.id}"}
           Server Details
     %input{:type => "hidden", :class => "cpu", :value => server.cpu}
     %input{:type => "hidden", :class => "memory", :value => server.memory}
