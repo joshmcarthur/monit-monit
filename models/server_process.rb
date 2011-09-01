@@ -33,7 +33,7 @@ class ServerProcess
     if @process = ServerProcess.first(conditions)
       @process.update!(attributes)
     else
-      @process = ServerProcess.create!(attributes)
+      @process = ServerProcess.create(attributes)
     end
 
     #Create a Resource Record for the process

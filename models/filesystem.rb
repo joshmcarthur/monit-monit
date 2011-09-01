@@ -26,7 +26,7 @@ class Filesystem
     if @filesystem = Filesystem.first(conditions)
       @filesystem.update!(attributes)
     else
-      @filesystem = Filesystem.create!(attributes)
+      @filesystem = Filesystem.create(attributes)
     end
     return @filesystem
   end

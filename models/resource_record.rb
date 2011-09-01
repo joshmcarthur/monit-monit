@@ -1,6 +1,6 @@
-require 'dm-timestamps'
 require 'server'
 require 'server_process'
+require 'dm-timestamps'
 
 class ResourceRecord
   include DataMapper::Resource
