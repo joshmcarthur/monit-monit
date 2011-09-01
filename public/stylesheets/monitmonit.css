@@ -2,6 +2,8 @@ div.topbar-wrapper { position: relative; height: 40px; margin: 5px -10px 15px; w
 div.topbar-wrapper .topbar { position: static; }
 div.row { margin-left: 0px; }
 div.row.middle { margin-bottom: 0px; }
+.row .columns:first-child { margin-left: 0px; }
+.row .columns.right { text-align: right; }
 .row .span16 { margin-left: 0px !important; }
 .row .span8.columns.processes_hosts { width: 480px; margin-left: 0px; }
 .row .span8.columns.filesystems_misc { width: 459px; border-right: solid 1px #999; margin-left: 0px; }
@@ -12,12 +14,17 @@ div.topbar-wrapper .topbar .fill { padding-left: 20px; padding-right: 20px;  hei
 .twipsy.right.goto_overview .twipsy-arrow { border-right-color: white; }
 .twipsy.goto_overview .twipsy-inner { background-color: white; color: black; }
 
+a.attr { display: inline-block; background: url(../images/thanks_small.png) no-repeat 5px 50%; padding-left: 24px; height: 20px; color: #666; text-decoration: none;}
+a.attr:hover { color: #222; text-decoration: none;}
+
 html, body { background-color: #EFEFEF !important; }
 div.container { background: #FFF; border-left: solid #999 1px; border-right: solid #999 1px; padding: 10px 10px; border-bottom: solid 1px #999; margin-bottom: 20px;}
 
 section.server header.actions { padding-left: 20px; }
 section.server header.actions h2 { background: url(../images/server.png) no-repeat 10px 50%; padding-left: 50px; }
 section.server { border-left: solid 1px #DDD; border-right: solid 1px #DDD; border-bottom: solid 1px #DDD; width: 940px; }
+section.server .alert-message { margin: 20px; }
+section.server .alert-message.block-message p { margin-bottom: 10px; }
 section.server div.row .span4.columns { width: 215px; }
 div.row.servers .span8 { margin-left: 10px; }
 div.row.servers form { margin-top: 20px; }
@@ -32,7 +39,7 @@ section.server a.large { margin-top: 20px; line-height: 50px; width: 150px; text
 .span16.columns.trends h4 { background: #DDD url(../images/trends.png) no-repeat 10px 50%; padding-left: 50px; }
 
 table tbody td.empty-table { background: #DDD; text-align: center; font-style: italic;}
-
 table tbody td.delete-wrapper form { margin: 0; float: right; }
 section.server header section.about { padding-left: 50px; }
+section.server .row.trends .columns:first-child { padding-left: 10px; }
 
