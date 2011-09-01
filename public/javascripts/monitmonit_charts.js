@@ -3,34 +3,44 @@ google.setOnLoadCallback(drawCharts);
 
 
 var drawResourceUtilization = function(chart_div, label, value) {
-    var resource_data = new google.visualization.DataTable();
-    resource_data.addColumn('string', 'Label');
-    resource_data.addColumn('number', 'Value');
+    try {
+        var resource_data = new google.visualization.DataTable();
+        resource_data.addColumn('string', 'Label');
+        resource_data.addColumn('number', 'Value');
 
-    resource_data.addRows(1);
-    resource_data.setValue(0, 0, label);
-    resource_data.setValue(0, 1, value);
+        resource_data.addRows(1);
+        resource_data.setValue(0, 0, label);
+        resource_data.setValue(0, 1, value);
 
-    var resource_chart = new google.visualization.Gauge(chart_div);
-    var options = {width: 200, height: 200, redFrom: 90, redTo: 100,
-            yellowFrom:75, yellowTo: 90, minorTicks: 5};
-    resource_chart.draw(resource_data, options);
+        var resource_chart = new google.visualization.Gauge(chart_div);
+        var options = {width: 200, height: 200, redFrom: 90, redTo: 100,
+                yellowFrom:75, yellowTo: 90, minorTicks: 5};
+        resource_chart.draw(resource_data, options);
+    }
+    catch(err) {
+
+    }
 }
 
 
 var drawDiskPie = function(chart_div, filesystem, used, total) {
-    var disk_data = new google.visualization.DataTable();
-    disk_data.addColumn("string", "Description");
-    disk_data.addColumn("number", "Percentage");
-    disk_data.addRows(2);
+    try {
+        var disk_data = new google.visualization.DataTable();
+        disk_data.addColumn("string", "Description");
+        disk_data.addColumn("number", "Percentage");
+        disk_data.addRows(2);
 
-    disk_data.setValue(0, 0, "Used");
-    disk_data.setValue(0, 1, used);
-    disk_data.setValue(1, 0, "Total");
-    disk_data.setValue(1, 1, total);
+        disk_data.setValue(0, 0, "Used");
+        disk_data.setValue(0, 1, used);
+        disk_data.setValue(1, 0, "Total");
+        disk_data.setValue(1, 1, total);
 
-    var disk_chart = new google.visualization.PieChart(chart_div);
-    disk_chart.draw(disk_data, {width: 450, height: 300});
+        var disk_chart = new google.visualization.PieChart(chart_div);
+        disk_chart.draw(disk_data, {width: 450, height: 300});
+    }
+    catch(err) {
+
+    }
 }
 
 var drawTrendLine = function(chart_div, array_of_values) {

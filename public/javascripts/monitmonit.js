@@ -14,18 +14,12 @@ var formatUptime = function(use_effects) {
     var options = {
         div_hours: "h ",
         div_minutes: "m ",
-        div_seconds: "s "
+        div_seconds: "s ",
     }
 
-    if (use_effects) {
-        $('h2.uptime').fadeOut(function() {
-            $(this).showTime(options);
-            $(this).fadeIn();
-        });
-    }
-    else {
-        $('h2.uptime').showTime(options);
-    }
+    $('input.uptime').each(function() {
+        $(this).showTime($.extend(options, { load_into: $(this).prev() }));
+    });
 }
 
 var doCountdown = function(already_run) {
@@ -48,7 +42,7 @@ var refreshOverview = function() {
                 server.find('input.cpu').val(value.cpu);
                 server.find('input.memory').val(value.memory);
                 server.find('input.load').val(value.load);
-                server.find('h2.uptime').text(value.uptime);
+                server.find('input.uptime').val(value.uptime);
                 drawCharts();
                 formatUptime(true);
             }
