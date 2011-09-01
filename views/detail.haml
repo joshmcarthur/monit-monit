@@ -15,14 +15,20 @@
     .span8.columns.filesystems_misc
       .filesystems
         %h4 Filesystems
-        - @server.filesystems.each do |fs|
+        - unless @server.filesystems.empty?
+          - @server.filesystems.each do |fs|
+            %fieldset.filesystem
+              %input{:type => "hidden", :class => "name", :value => fs.name}
+              %input{:type => "hidden", :class => "usage", :value => fs.usage}
+              %input{:type => "hidden", :class => "total", :value => fs.total}
+            .chart
+              %h6= "#{fs.name} Usage"
+              %div{:id => "#{fs.name}_chart"}
+        - else
           %fieldset.filesystem
-            %input{:type => "hidden", :class => "name", :value => fs.name}
-            %input{:type => "hidden", :class => "usage", :value => fs.usage}
-            %input{:type => "hidden", :class => "total", :value => fs.total}
-          .chart
-            %h6= "#{fs.name} Usage"
-            %div{:id => "#{fs.name}_chart"}
+            .alert-message.block-message.info{:style => "text-align:center"}
+              %p
+                (No filesystems being monitored)
     .span8.columns.processes_hosts
       .processes
         %h4 Monitored Processes
