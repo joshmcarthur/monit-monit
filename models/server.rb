@@ -6,6 +6,7 @@ require 'filesystem'
 require 'resource_record'
 require 'server_process'
 require 'host'
+require 'error'
 require 'xml_helpers'
 
 class Server
@@ -22,6 +23,7 @@ class Server
   has n, :filesystems
   has n, :processes, 'ServerProcess'
   has n, :hosts
+  has 1, :error
 
   #Get the CPU value - i.e. the latest resource record for this server
   def cpu
@@ -52,7 +54,8 @@ class Server
         :uptime => server.uptime,
         :cpu => server.cpu.to_f,
         :memory => server.memory.to_f,
-        :load => server.load.to_f
+        :load => server.load.to_f,
+        :errored => !server.error.nil?
       }
     end
     overview
@@ -62,39 +65,65 @@ class Server
 
   def fetch
     begin
-      Timeout::timeout(60) do
+      #Clear existing error
+      self.error.destroy if self.error.is_a?(Error)
+
+      Timeout::timeout(3) do
         @xml = Nokogiri::HTML(open(self.monit_url))
-
-        #Update the server
-        self.update!({
-          :uptime => value('//server/uptime')
-        })
-
-        #Add a resource record for the retrieval
-        self.resource_records.create!({
-          :cpu => value('//system/cpu/user', :to_f),
-          :memory => value('//system/memory/percent', :to_f),
-          :load => value('//system/load/avg01', :to_f),
-          :swap => value('//system/swap/percent', :to_f),
-        })
-
-        #Update filesystems
-        @xml.xpath("//service[@type=0]").map do |xml|
-          Filesystem.update_or_create_from_xml({:name => value('name', :to_s, xml), :server_id => self.id}, xml, {:server => self})
-        end
-
-        #Update processes
-        @xml.xpath("//service[@type=3]").map do |xml|
-          ServerProcess.update_or_create_from_xml({:name => value('name', :to_s, xml), :server_id => self.id}, xml, {:server => self})
-        end
-
-        #Update hosts
-        @xml.xpath("//service[@type=4]").map do |xml|
-          Host.update_or_create_from_xml({:name => value('name', :to_s, xml), :server_id => self.id}, xml, {:server => self})
-        end
       end
-      self
+
+      #Update the server
+      self.update({
+        :uptime => value('//server/uptime')
+      })
+
+      #Add a resource record for the retrieval
+      self.resource_records.create({
+        :cpu => value('//system/cpu/user', :to_f),
+        :memory => value('//system/memory/percent', :to_f),
+        :load => value('//system/load/avg01', :to_f),
+        :swap => value('//system/swap/percent', :to_f),
+      })
+
+      #Update filesystems
+      @xml.xpath("//service[@type=0]").map do |xml|
+        Filesystem.update_or_create_from_xml({
+            :name => value('name', :to_s, xml),
+            :server_id => self.id
+          }, xml,
+          {
+            :server => self
+          }
+        )
+      end
+
+      #Update processes
+      @xml.xpath("//service[@type=3]").map do |xml|
+        ServerProcess.update_or_create_from_xml({
+            :name => value('name', :to_s, xml),
+            :server_id => self.id
+          }, xml,
+          {
+            :server => self
+          }
+        )
+      end
+
+      #Update hosts
+      @xml.xpath("//service[@type=4]").map do |xml|
+        Host.update_or_create_from_xml({
+            :name => value('name', :to_s, xml),
+            :server_id => self.id
+          }, xml, {
+            :server => self
+          }
+        )
+      end
+
+    rescue Exception => exp
+      self.error = Error.create(:message => exp.message, :server => self)
     end
+    return self
   end
 
 
