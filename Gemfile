@@ -19,8 +19,12 @@ gem 'dm-sqlite-adapter'
 
 #Other
 gem 'sinatra-content-for'
+gem 'dm-timestamps'
 
 
+group :development do
+  gem 'ruby-debug19', :require => 'ruby-debug'
+end
 
 group :test do
     gem 'rack-test'
