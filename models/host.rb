@@ -22,7 +22,7 @@ class Host
     if @host = Host.first(conditions)
       @host.update!(attributes)
     else
-      @host = Host.create!(attributes)
+      @host = Host.create(attributes)
     end
 
     return @host
