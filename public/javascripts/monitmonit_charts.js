@@ -2,7 +2,7 @@ google.load('visualization', '1', {packages:['corechart', 'gauge']});
 google.setOnLoadCallback(drawCharts);
 
 
-var drawResourceUtilization = function(chart_div, label, value) {
+var drawResourceUtilization = function(chart_div, label, value, is_load) {
     try {
         var resource_data = new google.visualization.DataTable();
         resource_data.addColumn('string', 'Label');
@@ -15,6 +15,9 @@ var drawResourceUtilization = function(chart_div, label, value) {
         var resource_chart = new google.visualization.Gauge(chart_div);
         var options = {width: 200, height: 200, redFrom: 90, redTo: 100,
                 yellowFrom:75, yellowTo: 90, minorTicks: 5};
+        if (is_load == true) {
+            $.extend(options, {redFrom: 10, redTo: 20, yellowFrom: 5, yellowTo: 10, max: 20});
+        }
         resource_chart.draw(resource_data, options);
     }
     catch(err) {
@@ -69,9 +72,9 @@ function drawCharts() {
         var memory = parseFloat(servers.eq(index).find('input.memory').val());
         var load = parseFloat(servers.eq(index).find('input.load').val());
 
-        drawResourceUtilization($(this).find('#cpu_chart')[0], 'CPU %', cpu);
-        drawResourceUtilization($(this).find('#memory_chart')[0], 'Memory %', memory);
-        drawResourceUtilization($(this).find('#load_chart')[0], 'Load', load);
+        drawResourceUtilization($(this).find('#cpu_chart')[0], 'CPU %', cpu, false);
+        drawResourceUtilization($(this).find('#memory_chart')[0], 'Memory %', memory, false);
+        drawResourceUtilization($(this).find('#load_chart')[0], 'Load', load, true);
 
         if ($('fieldset.filesystem').length > 0) {
             $('fieldset.filesystem').each(function() {
