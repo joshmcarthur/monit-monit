@@ -25,6 +25,7 @@ section.server header.actions h2 { background: url(../images/server.png) no-repe
 section.server { border-left: solid 1px #DDD; border-right: solid 1px #DDD; border-bottom: solid 1px #DDD; width: 940px; }
 section.server .alert-message { margin: 20px; }
 section.server .alert-message.block-message p { margin-bottom: 10px; }
+.alert-message.block-message.error h4 { padding-left: 30px; background: url(../images/error.png) no-repeat 0px 50%; }
 section.server div.row .span4.columns { width: 215px; }
 div.row.servers .span8 { margin-left: 10px; }
 div.row.servers form { margin-top: 20px; }
@@ -37,6 +38,8 @@ section.server a.large { margin-top: 20px; line-height: 50px; width: 150px; text
 .span8.columns .processes h4 { background: #DDD url(../images/processes.png) no-repeat 10px 50%; padding-left: 50px; }
 .span8.columns .hosts h4 { background: #DDD url(../images/hosts.png) no-repeat 10px 50%; padding-left: 50px; }
 .span16.columns.trends h4 { background: #DDD url(../images/trends.png) no-repeat 10px 50%; padding-left: 50px; }
+
+.span5.columns div.chart { width: 200px; margin: auto; }
 
 table tbody td.empty-table { background: #DDD; text-align: center; font-style: italic;}
 table tbody td.delete-wrapper form { margin: 0; float: right; }
