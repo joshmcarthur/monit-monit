@@ -3,11 +3,11 @@
     %h2= "#{@server.name}"
   .row
     .span5.columns
-      #cpu_chart
+      #cpu_chart.chart
     .span5.columns
-      #memory_chart
+      #memory_chart.chart
     .span5.columns
-      #load_chart
+      #load_chart.chart
     %input{:type => "hidden", :class => "cpu", :value => @server.cpu}
     %input{:type => "hidden", :class => "memory", :value => @server.memory}
     %input{:type => "hidden", :class => "load", :value => @server.load}
