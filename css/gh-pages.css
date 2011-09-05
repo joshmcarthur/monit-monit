@@ -66,30 +66,18 @@ td { vertical-align: top; }
    Author: @sudojosh
    ========================================================================== */
   html, body { color: #222 !important; background-color: #EFEFEF !important;}
-  div.container { background-color: #FFF; border-left: solid 10px #E1E1E1; border-right: solid 10px #E1E1E1; padding: 0 30px;}
+  div.container { background-color: #FFF; border-left: solid 10px #E1E1E1; border-right: solid 10px #E1E1E1; border-bottom: solid 10px #E1E1E1; padding: 0 30px 30px;}
   header { margin-top: 50px; }
   header h1 { font-size: 300%; }
-  header .downloads a.btn { float: right; margin-left: 10px; }
-  ul.features, ul.features li { list-style: none; margin: 0; padding: 0; }
-  ul.features li { background: url(../img/bullet.png) no-repeat 0px 50%; line-height: 20px; padding-left: 20px; }
+  section.buttons { margin-left: 0px; }
+  section.buttons a.btn { color: #999; width: 400px; margin: auto; line-height: 80px; text-align: center; font-size: 55px; background-image: none; filter: progid:DXImageTransform.Microsoft.gradient(enabled = false); -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; opacity: 1; }
+  section.buttons a.btn.success { background: #57A957; color: #FFF;}
+  section.buttons a.btn:hover { -webkit-box-shadow: 0px 0px 10px #888;  }
 
   section.intro article { font-size: 24px; font-style: italic; color: #333; line-height: 30px;}
   section.intro .span2  { height: 170px; }
-
-  .pills a:hover { background-color: #E1E1E1; border-radius: 2px; }
-  section.guide ul.pills { margin: auto; width: 85%; }
-  section.guide section { margin: auto; width: 85%; }
-
-
-
-
-
-
-
-
-
-
-
+  section.gallery img { border: solid 5px whiteSmoke; }
+  footer { text-align: center; }
 
 
 
