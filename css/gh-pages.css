@@ -8,7 +8,7 @@ audio:not([controls]) { display: none; }
 [hidden] { display: none; }
 
 html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-body { margin: 0; font-size: 13px; line-height: 1.231; }
+body { margin: 0; font-size: 18px; line-height: 1.231; }
 body, button, input, select, textarea { font-family: sans-serif; color: #222; }
 
 ::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
@@ -63,10 +63,22 @@ td { vertical-align: top; }
 
 
 /* ==|== primary styles =====================================================
-   Author: 
+   Author: @sudojosh
    ========================================================================== */
+  html, body { color: #222 !important; background-color: #EFEFEF !important;}
+  div.container { background-color: #FFF; border-left: solid 10px #E1E1E1; border-right: solid 10px #E1E1E1; padding: 0 30px;}
+  header { margin-top: 50px; }
+  header h1 { font-size: 300%; }
+  header .downloads a.btn { float: right; margin-left: 10px; }
+  ul.features, ul.features li { list-style: none; margin: 0; padding: 0; }
+  ul.features li { background: url(../img/bullet.png) no-repeat 0px 50%; line-height: 20px; padding-left: 20px; }
 
+  section.intro article { font-size: 24px; font-style: italic; color: #333; line-height: 30px;}
+  section.intro .span2  { height: 170px; }
 
+  .pills a:hover { background-color: #E1E1E1; border-radius: 2px; }
+  section.guide ul.pills { margin: auto; width: 85%; }
+  section.guide section { margin: auto; width: 85%; }
 
 
 
@@ -107,13 +119,13 @@ td { vertical-align: top; }
 
 
 /* ==|== print styles ======================================================= */
- 
+
 @media print {
-  * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; } 
+  * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; }
   a, a:visited { text-decoration: underline; }
   a[href]:after { content: " (" attr(href) ")"; }
   abbr[title]:after { content: " (" attr(title) ")"; }
-  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; } 
+  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
   pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
   thead { display: table-header-group; }
   tr, img { page-break-inside: avoid; }
@@ -122,3 +134,4 @@ td { vertical-align: top; }
   p, h2, h3 { orphans: 3; widows: 3; }
   h2, h3 { page-break-after: avoid; }
 }
+
