@@ -13,7 +13,7 @@
     %p
       %a.btn.small{:href => "/servers"} Go to Servers
 - @servers.each do |server|
-  %section.server{:id => server.id}
+  %section.server.overview{:id => server.id}
     %header.actions
       %h2= "#{server.name}"
     - if !server.error.nil?
@@ -36,11 +36,17 @@
     - else
       .row
         .span4.columns
-          #cpu_chart
+          %label.overview_resource CPU
+          %h3.cpu= server.cpu.to_s + "%"
+          .cpu_chart
         .span4.columns
-          #memory_chart
+          %label.overview_resource Memory
+          %h3.memory= server.memory.to_s + "%"
+          .memory_chart
         .span4.columns
-          #load_chart
+          %label.overview_resource Load
+          %h3.load= server.load.to_s
+          .load_chart
         .span4.columns
           %h2.uptime
             \---

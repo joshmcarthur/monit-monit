@@ -31,8 +31,8 @@ div.row.servers .span8 { margin-left: 10px; }
 div.row.servers form { margin-top: 20px; }
 .alert-message.block-message p { margin-top: 10px; }
 
-h2.uptime { font-size: 250%; margin-top: 40px; }
-section.server a.large { margin-top: 20px; line-height: 50px; width: 150px; text-align: center; font-size: 24px; }
+h2.uptime { font-size: 250%; margin-top: 15px; }
+section.server a.large { margin-top: 10px; line-height: 50px; width: 185px; text-align: center; font-size: 24px; }
 .span8.columns .filesystems h4 { background: #DDD url(../images/disk.png) no-repeat 10px 50%; padding-left: 50px; }
 .span8.columns .filesystems .chart { padding: 10px; }
 .span8.columns .processes h4 { background: #DDD url(../images/processes.png) no-repeat 10px 50%; padding-left: 50px; }
@@ -45,4 +45,18 @@ table tbody td.empty-table { background: #DDD; text-align: center; font-style: i
 table tbody td.delete-wrapper form { margin: 0; float: right; }
 section.server header section.about { padding-left: 50px; }
 section.server .row.trends .columns:first-child { padding-left: 10px; }
+
+section.server table.resource { width: 90%; margin: -80px auto 10px auto; }
+section.server table.resource td { padding: 0; width: 1%; background-color: #EFEFEF; height: 75px; }
+section.server table.resource td.used { background-color: #D1EED1;}
+section.server label.overview_resource {
+    float: none;
+    width: 100%;
+    text-align: center;
+    display: block;
+    font-size: 18px;
+    margin: 15px auto;
+}
+
+section.server label.overview_resource + h3 { font-size: 55px; text-align: center; line-height: 80px; }
 

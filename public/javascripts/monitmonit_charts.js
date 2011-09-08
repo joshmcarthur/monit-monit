@@ -57,46 +57,99 @@ var drawTrendLine = function(chart_div, array_of_values) {
         trend_data.setValue(row_count, 1, value);
         row_count++;
     });
-    console.log(trend_data);
 
     var trend_chart = new google.visualization.LineChart(chart_div);
     options = { width: 280, height: 240, legend: 'none', vAxis: { viewWindowMode: "explicit", viewWindow: { max: 100.00, min: 0.00 } }}
     trend_chart.draw(trend_data, options);
 }
 
+var drawLoadBar = function(load_value, chart_div) {
+    //We need to make some wild stabs in the dark here, and just use some numbers
+    var value = 0;
+    if (load_value > 0.25 && load_value < 1) {
+        value = 15;
+    } else if (load_value > 1 && load_value < 5) {
+        value = 25;
+    } else if (load_value > 5 && load_value < 10) {
+        value = 50;
+    } else if (load_value > 10 && load_value < 15) {
+        value = 75;
+    } else if (load_value > 15) {
+        value = 100;
+    }
+
+    drawResourceBar(value, chart_div);
+}
+
+var drawResourceBar = function(resource_value, chart_div) {
+    var table = $("<table class='resource'><tr></tr></table>");
+    //Make the 'utilized' resource bar
+    var value = Math.ceil(resource_value);
+    for (var i = 0; i < value; i++) {
+        $("<td class='used'></td>").appendTo(table.find('tr'));
+    }
+
+    //Fill up the rest
+    for (var i = 0; i < (100 - value); i++) {
+        $("<td></td>").appendTo(table.find('tr'));
+    }
+    chart_div.empty();
+    table.appendTo(chart_div);
+}
+
+var serverDetailCharts = function() {
+        var servers = $('section.server.detail');
+        servers.each(function(index) {
+            var cpu = parseFloat(servers.eq(index).find('input.cpu').val());
+            var memory = parseFloat(servers.eq(index).find('input.memory').val());
+            var load = parseFloat(servers.eq(index).find('input.load').val());
+
+            drawResourceUtilization($(this).find('#cpu_chart')[0], 'CPU %', cpu, false);
+            drawResourceUtilization($(this).find('#memory_chart')[0], 'Memory %', memory, false);
+            drawResourceUtilization($(this).find('#load_chart')[0], 'Load', load, true);
+
+            if ($('fieldset.filesystem').length > 0) {
+                $('fieldset.filesystem').each(function() {
+                    var name = $(this).find('input.name').val();
+                    var usage = parseFloat($(this).find('input.usage').val());
+                    var total = parseFloat($(this).find('input.total').val());
+                    var chart_div = $("#" + name + "_chart")[0];
+                    drawDiskPie(chart_div, name, usage, total);
+                });
+            }
+
+            if ($('section.server div.trends').length > 0) {
+                $('section.server div.trends input[type=hidden]').each(function() {
+                    var name = $(this).attr('id');
+                    var values = $(this).val().split(',');
+                    $.each(values, function(index, value) {
+                        values[index] = parseInt(value);
+                    });
+                    var chart_div = $(this).next('div')[0];
+                    drawTrendLine(chart_div, values);
+                });
+            }
+        });
+}
+
+var serverOverviewCharts = function() {
+    var servers = $('section.server.overview');
+    servers.each(function(index, item) {
+        drawResourceBar(parseFloat($(this).find('h3.cpu').text()), $(this).find('.cpu_chart'));
+        drawResourceBar(parseFloat($(this).find('h3.memory').text()), $(this).find('.memory_chart'));
+        drawLoadBar(parseFloat($(this).find('h3.load').text()), $(this).find('.load_chart'));
+    });
+}
 
 function drawCharts() {
-    var servers = $('section.server');
-    servers.each(function(index) {
-        var cpu = parseFloat(servers.eq(index).find('input.cpu').val());
-        var memory = parseFloat(servers.eq(index).find('input.memory').val());
-        var load = parseFloat(servers.eq(index).find('input.load').val());
+    if ($('section.server.detail').length == 1)
+    {
+        serverDetailCharts();
+    }
 
-        drawResourceUtilization($(this).find('#cpu_chart')[0], 'CPU %', cpu, false);
-        drawResourceUtilization($(this).find('#memory_chart')[0], 'Memory %', memory, false);
-        drawResourceUtilization($(this).find('#load_chart')[0], 'Load', load, true);
-
-        if ($('fieldset.filesystem').length > 0) {
-            $('fieldset.filesystem').each(function() {
-                var name = $(this).find('input.name').val();
-                var usage = parseFloat($(this).find('input.usage').val());
-                var total = parseFloat($(this).find('input.total').val());
-                var chart_div = $("#" + name + "_chart")[0];
-                drawDiskPie(chart_div, name, usage, total);
-            });
-        }
-
-        if ($('section.server div.trends').length > 0) {
-            $('section.server div.trends input[type=hidden]').each(function() {
-                var name = $(this).attr('id');
-                var values = $(this).val().split(',');
-                $.each(values, function(index, value) {
-                    values[index] = parseInt(value);
-                });
-                var chart_div = $(this).next('div')[0];
-                drawTrendLine(chart_div, values);
-            });
-        }
-    });
+    if ($('section.server.overview').length > 0)
+    {
+        serverOverviewCharts();
+    }
 }
 
