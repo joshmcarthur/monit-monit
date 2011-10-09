@@ -3,8 +3,9 @@ require 'sinatra/content_for'
 require 'datamapper'
 require 'dm-timestamps'
 require 'haml'
-require "#{Dir.pwd}/lib/scheduler_manager_middleware"
-require "#{Dir.pwd}/lib/datastore"
+Dir[File.join(File.dirname(__FILE__), 'lib', '*.rb').each do |file|
+  require file
+end
 
 #Require models
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/models') unless $LOAD_PATH.include?(File.dirname(__FILE__) + '/models')
@@ -79,6 +80,25 @@ class MonitMonit < Sinatra::Base
     @title = "500"
     haml :"500", {:layout => :blank}
   end
+  
+  ### HANDLE INCOMING ALERTS ###
+  Mailman.config.pop3 = mailman_config
+  
+
+  Mailman::Application.run do
+    to mailman_config['address'],  IncomingMailProcessor
+  end
+  
+  private
+  
+  def mailman_pop3_config(password = ENV['PASSWORD'])
+    YAML.load(
+      File.read(
+        File.join(File.dirname(__FILE__), "config", "mailing.yml")
+      )
+    )[settings.environment].merge('password' => password)
+  end
+end
 
 end
 
