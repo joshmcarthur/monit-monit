@@ -21,6 +21,8 @@ gem 'dm-sqlite-adapter'
 gem 'sinatra-content-for'
 gem 'dm-timestamps'
 
+# Mailing
+gem 'mailman'
 
 group :development do
   gem 'ruby-debug19', :require => 'ruby-debug'
