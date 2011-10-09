@@ -37,7 +37,7 @@
               Go to Overview!
           %ul.secondary-nav
             %li 
-              - if session[:projector_mode]
+              - if params[:projector] == "true"
                 %a{:href => '/?projector=false'} Turn Projector Mode Off
               - else
                 %a{:href => '/?projector=true'} Projector Mode
