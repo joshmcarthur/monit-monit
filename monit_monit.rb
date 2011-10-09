@@ -16,6 +16,7 @@ class MonitMonit < Sinatra::Base
 
   # Setup
   use SchedulerManagerMiddleware
+  enable :sessions
 
   configure :test do
     DataStore.fetch_data_store(:test)
@@ -34,6 +35,7 @@ class MonitMonit < Sinatra::Base
   get '/' do
     @title = "Overview"
     @servers = Server.all
+    @default_layout = params[:projector] == "true" ? :projector : :layout
     haml :overview
   end
 
