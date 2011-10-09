@@ -1,0 +1,68 @@
+!!! 5
+
+/ paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+/[if lt IE 7]
+  %html.no-js.ie6.oldie{:lang => "en"}
+/[if IE 7]
+  %html.no-js.ie7.oldie{:lang => "en"}
+/[if IE 8]
+  %html.no-js.ie8.oldie{:lang => "en"}
+/[if gt IE 8]
+  %html.no-js{:lang => "en"}
+
+%head
+  %meta{:chartset => "utf-8"}
+  %meta{"meta-equiv" => "X-UA-Compatible", :content => "IE=edge,chrome=1"}
+
+  %title
+    Monit Monit
+    = @title.nil? ? "" : " :: #{@title}"
+
+  %meta{:name => "author", :content => "@sudojosh"}
+  %meta{:name => "viewport", :content => "width=device-width,initial-scale=1"}
+
+  %link{:rel => "stylesheet", :type => "text/css", :href => "/stylesheets/monitmonit_projector.css"}
+  %link{:href => "/stylesheets/bootstrap.min.css", :rel => "stylesheet", :type => "text/css"}
+
+%body
+  #container.container-fluid
+    .topbar-wrapper
+      %header.topbar
+        %div.fill
+          %h3.title
+            %a{:href => '/'} MonitMonit
+          .twipsy.right.goto_overview
+            .twipsy-arrow
+            .twipsy-inner
+              Go to Overview!
+          %ul.secondary-nav
+            %li 
+              - if session[:projector_mode]
+                %a{:href => '/?projector=false'} Turn Projector Mode Off
+              - else
+                %a{:href => '/?projector=true'} Projector Mode
+            %li
+              %a{:href => '/servers'} Manage Servers
+    #main{:role => "main"}
+      .content
+        = yield
+    %footer
+      .row
+        .span8.columns
+          %a.twitter-follow-button{:href => "http://twitter.com/sudojosh"} Follow @sudojosh
+          %script{:src => "http://platform.twitter.com/widgets.js", :type => "text/javascript"}
+        .span8.columns.right
+          %a.attr{:href => "http://www.greepit.com/open-source-icons-gcons/"} Icons from Greepit
+    %br.clear
+
+  %script{:src => "//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"}
+  %script{:src => "/javascripts/monitmonit_projector.js"}
+  %script{:src => "/javascripts/jquery.countdown.min.js"}
+  %script{:src => "/javascripts/jquery.showtime.min.js"}
+  %script{:src => "/javascripts/monitmonit.js"}
+
+
+  :javascript
+    window.jQuery || document.write('<script src="/javascripts/jquery.min.js"><\/script>')
+  = yield_content :javascripts
+
