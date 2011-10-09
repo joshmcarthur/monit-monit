@@ -45,4 +45,5 @@ table tbody td.empty-table { background: #DDD; text-align: center; font-style: i
 table tbody td.delete-wrapper form { margin: 0; float: right; }
 section.server header section.about { padding-left: 50px; }
 section.server .row.trends .columns:first-child { padding-left: 10px; }
+label.chart_label { display: none; }
 

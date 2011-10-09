@@ -10,7 +10,7 @@ var drawCharts = function() {
     var load = parseFloat(servers.eq(index).find('input.load').val());
     drawCpuTable($(this), cpu);
     drawMemoryTable($(this), memory);
-    drawLoadTable($(this), load);
+    drawLoadTable($(this), load, 20);
   });
 }
 

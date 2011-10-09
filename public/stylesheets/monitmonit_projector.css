@@ -8,10 +8,10 @@
 .topbar .twipsy.goto_overview .twipsy-arrow { border-right-color: #FFF; }
 .topbar .twipsy .twipsy-inner { background-color: #FFF; color: #222; }
 
-section.server { position: relative; display: block; width: 200px; height: 300px; overflow: hidden; border: solid 1px #DDD; border-top: none;}
-section.server header.actions { margin: 0; padding: 10px; }
+section.server { position: relative; display: block; width: 200px; height: 300px; overflow: hidden; border: solid 1px #DDD; border-top: none; margin-top: 25px; }
+section.server header.actions { margin: 0; padding: 10px; margin-bottom: 15px; background-color: #DDD; border-radius: 0px;  }
 section.server #cpu_chart, section.server #memory_chart, section.server #load_chart {
-  display: block; height: 40px; width: 100%; margin: 5px auto; background-color: #EFEFEF;
+  height: 40px; width: 200px; margin: 0; margin-top: -24px; margin-bottom: 10px; background-color: #EFEFEF;
 }
 section.server h2.uptime { font-size: 150%; width: 200px; margin: auto; text-align: center; margin: 0;}
 section.server a.btn.large.success { width: 100%; border-radius: 0px; position: absolute; bottom: 0px; text-align: center; padding-left: 0px; padding-right: 0px;}
@@ -20,7 +20,8 @@ footer { margin: 0px; padding: 0px; }
 footer .row { margin-bottom: 0px; position: fixed; bottom: 45px; right: 0px; }
 footer .row .span8 { width: 200px; float: none; display: block; }
 
-label.chart_label { display: block; float: none; text-align: left; margin-left: 10px; position: relative; top: 35px; }
+label.chart_label { display: block; float: none; text-align: left; margin-left: 10px; position: relative; top: 5px; }
 table.chart tbody tr { display: block; width: 200px; }
 table.chart tbody tr td { height: 40px; padding: 0; width: 2px; border-bottom: none;}
-table.chart tbody tr td.tick { background-color: #000; }
+table.chart tbody tr td.tick { background-color: #FDDFDE; }
+table.chart.load tbody tr td { width: 10px; }
