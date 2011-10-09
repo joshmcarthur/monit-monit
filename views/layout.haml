@@ -36,6 +36,11 @@
             .twipsy-inner
               Go to Overview!
           %ul.secondary-nav
+            %li 
+              - if session[:projector_mode]
+                %a{:href => '/?projector=false'} Turn Projector Mode Off
+              - else
+                %a{:href => '/?projector=true'} Projector Mode
             %li
               %a{:href => '/servers'} Manage Servers
     #main{:role => "main"}
