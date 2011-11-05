@@ -1,5 +1,11 @@
-class IncomingMailProcessor
+$LOAD_PATH.unshift(Dir.pwd + '/models') unless $LOAD_PATH.include?(Dir.pwd + '/models')
+$LOAD_PATH.unshift(Dir.pwd + '/lib') unless $LOAD_PATH.include?(Dir.pwd + '/lib')
 
+class IncomingMailProcessor
+  require 'mail'
+  require 'datamapper'
+  require 'server'
+  
   # This class method is called when Mailman receives a message matching the configured
   # 'to' address for alerts. 
   # This parser is written to expect the following (default) Monit message:
@@ -15,6 +21,20 @@ class IncomingMailProcessor
 
   def self.receive(message, params)
     #Prevents matching of 'successful' messages
-    return unless message.split('\n')[0] =~ /matched/
+    contents = message.body.decoded
+    contents = message.split('\n')
+    contents.delete_if { |c| c.blank? }
+    return unless contents[0] =~ /matched/
+    service = contents[0].match(/Service\s{1}(\S+)/)[1]
+    date    = Time.parse(contents[1].match(/Date\:\s+(.+)/)[1])
+    action  = contents[3].match(/Action\:\s+(.+)/)[1]
+    host    = contents[4].match(/Host\:\s+(.+)/)[1]
+    description = contents[5].match(/Description\:\s+(.+)/)[1]
+    
+    @server = Server.get(:host => "http://#{host}")
+    @server.alerts.first_or_create_by({:date => date}, {
+      :action => action,
+      :description => description
+    })
   end
 end
