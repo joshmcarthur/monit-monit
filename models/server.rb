@@ -7,6 +7,7 @@ require 'resource_record'
 require 'server_process'
 require 'host'
 require 'error'
+require 'alert'
 require 'xml_helpers'
 
 class Server
@@ -21,6 +22,7 @@ class Server
   has n, :resource_records, :child_key => [ :server_id ]
 
   has n, :filesystems
+  has n, :alerts
   has n, :processes, 'ServerProcess'
   has n, :hosts
   has 1, :error
