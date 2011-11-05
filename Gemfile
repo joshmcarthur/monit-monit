@@ -22,6 +22,7 @@ gem 'sinatra-content-for'
 gem 'dm-timestamps'
 
 # Mailing
+gem 'mail'
 gem 'mailman'
 
 group :development do

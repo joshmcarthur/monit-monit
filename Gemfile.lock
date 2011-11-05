@@ -136,6 +136,7 @@ DEPENDENCIES
   haml
   json
   launchy
+  mail
   mailman
   nokogiri
   rack-test
