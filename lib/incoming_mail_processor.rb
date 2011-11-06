@@ -19,11 +19,13 @@ class IncomingMailProcessor
   # Your faithful employee,
   # monit
 
-  def self.receive(message, params)
+  def receive(message, params)
     #Prevents matching of 'successful' messages
     contents = message.body.decoded
-    contents = message.split('\n')
-    contents.delete_if { |c| c.blank? }
+    contents = contents.split("\n")
+    contents.delete_if { |c| c.blank? || c =~ /\A\-\-/ }
+    require 'ruby-debug'
+    debugger
     return unless contents[0] =~ /matched/
     service = contents[0].match(/Service\s{1}(\S+)/)[1]
     date    = Time.parse(contents[1].match(/Date\:\s+(.+)/)[1])
