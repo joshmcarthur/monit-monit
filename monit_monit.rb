@@ -3,7 +3,7 @@ require 'sinatra/content_for'
 require 'datamapper'
 require 'dm-timestamps'
 require 'haml'
-Dir[File.join(File.dirname(__FILE__), 'lib', '*.rb').each do |file|
+Dir[File.join(File.dirname(__FILE__), 'lib', '*.rb')].each do |file|
   require file
 end
 
@@ -82,23 +82,18 @@ class MonitMonit < Sinatra::Base
   end
   
   ### HANDLE INCOMING ALERTS ###
-  Mailman.config.pop3 = mailman_config
-  
-
-  Mailman::Application.run do
-    to mailman_config['address'],  IncomingMailProcessor
-  end
-  
-  private
-  
-  def mailman_pop3_config(password = ENV['PASSWORD'])
+  def self.mailman_pop3_config
     YAML.load(
       File.read(
         File.join(File.dirname(__FILE__), "config", "mailing.yml")
       )
-    )[settings.environment].merge('password' => password)
+    )[settings.environment.to_s].symbolize_keys
   end
-end
+  
+  Mailman.config.pop3 = MonitMonit.mailman_pop3_config
+  Mailman::Application.run do
+    to MonitMonit.mailman_pop3_config[:address],  IncomingMailProcessor
+  end
 
 end
 
